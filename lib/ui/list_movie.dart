@@ -44,25 +44,15 @@ class ListMovieState extends State<ListMovie> {
 
   Widget buildList(AsyncSnapshot<MListMovieModel> snapshot) {
     return GridView.builder(
-      gridDelegate:
-          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, childAspectRatio: 0.7),
       itemBuilder: (BuildContext context, int index) {
         return GridTile(
           child: GestureDetector(
               child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Image.network(
-                        'https://image.tmdb.org/t/p/w185${snapshot.data.results[index].poster_path}',
-                        height: 150,
-                        fit: BoxFit.fill,
-                      ),
-                      width: double.infinity,
-                    ),
-                    Text(snapshot.data.results[index].title),
-                    Text(snapshot.data.results[index].overview)
-                  ],
+                child: Image.network(
+                  'https://image.tmdb.org/t/p/w185${snapshot.data.results[index].poster_path}',
+                  fit: BoxFit.fill,
                 ),
               ),
               onTap: () => Navigator.push(

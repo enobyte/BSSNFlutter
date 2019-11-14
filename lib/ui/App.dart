@@ -39,9 +39,10 @@ class MyAppState extends State<MyApp> {
             children: <Widget>[
               Container(
                 height: double.infinity,
+                width: double.infinity,
                 child: Image.asset(
                   'lib/assets/background.jpg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Container(color: Colors.white.withOpacity(0.2))
@@ -71,13 +72,15 @@ class MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              RaisedButton(
-                onPressed: () =>
-                    checkUser(emailController.text, passwordController.text),
-                color: Colors.green,
-                child: Text(
-                  'Login',
-                  style: TextStyle(color: Colors.blue[900]),
+              Flexible(
+                child: RaisedButton(
+                  onPressed: () =>
+                      checkUser(emailController.text, passwordController.text),
+                  color: Colors.green,
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.blue[900]),
+                  ),
                 ),
               ),
             ],
