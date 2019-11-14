@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencess {
+class SharedPreferencesHelper {
   static final String userLogin = 'user_login';
 
   // Hapus Cache BaseOn Key
