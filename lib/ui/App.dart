@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_apps/utility/sharedpreferences.dart';
 
 import 'list_movie.dart';
 
@@ -8,26 +9,39 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: MyApp(),
+        body: LoginForm(),
       ),
       routes: <String, WidgetBuilder>{
         '/movie_list': (BuildContext context) => ListMovie(),
+        '/login': (BuildContext context) => LoginForm(),
       },
     );
   }
 }
 
-class MyApp extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return LoginFormState();
   }
 }
 
-class MyAppState extends State<MyApp> {
+class LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> keyScaffold = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferencesHelper.checkKey(SharedPreferencesHelper.userLogin)
+        .then((onValue) {
+      if (onValue) {
+        //Pindah Page Ke Movie List Tanpa Bisa Back
+        Navigator.pushReplacementNamed(context, '/movie_list');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +106,12 @@ class MyAppState extends State<MyApp> {
 
   void checkUser(String email, String password) {
     if (email == 'enoraden@gmail.com' && password == '12345') {
-      Navigator.pushNamed(context, '/movie_list'); //Navigation ke List Movie
+      //Simpan Email ke Cache
+      SharedPreferencesHelper.setPreferences(
+          email, SharedPreferencesHelper.userLogin);
+
+      Navigator.pushReplacementNamed(
+          context, '/movie_list'); //Navigation ke List Movie
     } else {
       keyScaffold.currentState.showSnackBar(
         SnackBar(

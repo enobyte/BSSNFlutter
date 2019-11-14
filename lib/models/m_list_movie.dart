@@ -33,6 +33,7 @@ class MListMovieResult {
   String poster_path;
   String backdrop_path;
   String overview;
+  int id;
 
   MListMovieResult(result) {
     title = result['title'];
@@ -40,6 +41,7 @@ class MListMovieResult {
     poster_path = result['poster_path'];
     backdrop_path = result['backdrop_path'];
     overview = result['overview'];
+    id = result['id'];
   }
 
   String get titleGet => title;
@@ -51,4 +53,6 @@ class MListMovieResult {
   String get backdroupGet => backdrop_path;
 
   String get overviewGet => overview;
+
+  int get idGet => id;
 }

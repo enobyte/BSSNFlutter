@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_apps/models/m_list_movie.dart';
+import 'package:flutter_apps/models/m_trailer_movie.dart';
 import 'package:http/http.dart';
 
 class MovieApiProvider {
@@ -13,6 +14,16 @@ class MovieApiProvider {
     response = await client.get("$_baseUrl/popular?api_key=$_apiKey");
     if (response.statusCode == 200) {
       return MListMovieModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed get Data');
+    }
+  }
+
+  Future<TrailerMovieModel> fetchTrailer(String idMovie) async {
+    Response response;
+    response = await client.get("$_baseUrl/$idMovie/videos?api_key=$_apiKey");
+    if (response.statusCode == 200) {
+      return TrailerMovieModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed get Data');
     }

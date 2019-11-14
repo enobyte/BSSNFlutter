@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_apps/blocs/movie_bloc.dart';
+import 'package:flutter_apps/blocs/movie_trailer_provider_bloc.dart';
 import 'package:flutter_apps/models/m_list_movie.dart';
 
 import 'detail_movie.dart';
@@ -55,23 +56,32 @@ class ListMovieState extends State<ListMovie> {
                   fit: BoxFit.fill,
                 ),
               ),
-              onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return DetailMovie(
-                        imageMovie:
-                            'https://image.tmdb.org/t/p/w185${snapshot.data.results[index].poster_path}',
-                        titleMovie: snapshot.data.results[index].title,
-                        descMovie: snapshot.data.results[index].overview
-                            .substring(0, 20),
-                        synopsisMovie: snapshot.data.results[index].overview,
-                      );
-                    }),
-                  ) //Navigation ke Detail Movie,
+              onTap: () => openDetail(snapshot.data, index)
+              //Navigation ke Detail Movie,
               ),
         );
       },
       itemCount: snapshot.data.results.length,
+    );
+  }
+
+  openDetail(MListMovieModel snapshot, int index) {
+    final page = MovieTrailerBlocProvider(
+        child: DetailMovie(
+      imageMovie:
+          'https://image.tmdb.org/t/p/w185${snapshot.results[index].poster_path}',
+      titleMovie: snapshot.results[index].title,
+      descMovie: snapshot.results[index].overview.substring(0, 20),
+      synopsisMovie: snapshot.results[index].overview,
+      movieId: snapshot.results[index].id,
+      backdropImage: snapshot.results[index].backdrop_path,
+    ));
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return page;
+      }),
     );
   }
 }
